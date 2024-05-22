@@ -1,0 +1,16 @@
+---
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: {{ .Values.className }}
+  annotations:
+    {{- if .Release.IsInstall }}
+      snapshot.storage.kubernetes.io/is-default-class: "true"
+    {{- else }}
+      {{- $annotations := ((lookup "snapshot.storage.k8s.io/v1" "VolumeSnapshotClass" "" .Values.className).metadata).annotations }}
+      snapshot.storage.kubernetes.io/is-default-class: {{ get $annotations "snapshot.storage.kubernetes.io/is-default-class" | quote }}
+    {{- end }}
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+driver: {{ .Values.driverName }}
+deletionPolicy: Delete

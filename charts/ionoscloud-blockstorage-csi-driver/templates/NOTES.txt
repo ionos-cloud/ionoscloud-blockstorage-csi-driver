@@ -1,0 +1,1 @@
+echo "Installed IONOS Cloud block storage CSI driver"

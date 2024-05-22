@@ -1,0 +1,70 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+The [Container Storage Interface][csi-spec] (CSI) driver plugin communicates with the [IONOS Cloud API][cloud-api] to manage storages.
+The visibility and permissions it has depend on the authentication token it is given.
+
+Check out [this page][token-docs] to learn more about managing tokens.
+
+## Prerequisites
+
+* Kubernetes 1.20+
+* Helm 3+
+
+Before installing create a secret that contains your IONOS Cloud authentication token:
+
+```console
+kubectl -n kube-system create secret generic csi-secret --from-literal token=<your-token>
+```
+
+The key **must** be named `token`.
+
+The CSI node server expects the file `/etc/ie-csi/cfg.json` to exist on every VM.
+The file must contain the datacenter ID of the VM in the following format:
+
+```json
+{"datacenter-id": "<DATACENTER_ID>"}
+```
+
+## Installation
+
+Provide the secret name during installation:
+
+```console
+helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-csi-driver --set tokenSecretName=csi-secret
+```
+
+> [!IMPORTANT]
+> Be aware that tokens have a limited liftime. The CSI controller deployment needs to restarted every time the token is updated.
+
+### Multi-tenancy setup
+
+The default settings of CSI driver helm chart are meant to be used in a single-tenancy manner.
+Should you need to install multiple CSI drivers using tokens from the same users or contracts, e.g. if you manage more than 1 cluster,
+you need to set the `clusterName` value on installation.
+
+```console
+helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-csi-driver \
+    --set tokenSecretName=csi-secret --set clusterName=production
+helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-csi-driver \
+    --set tokenSecretName=csi-secret --set clusterName=staging
+```
+
+> [!WARNING]
+> The `clusterName` must not be changed after storage has already been provisioned.
+
+{{ template "chart.valuesSection" . }}
+
+[cloud-api]: https://api.ionos.com/docs/cloud/v6/
+[token-docs]: https://docs.ionos.com/cloud/getting-started/basic-tutorials/manage-authentication-tokens
+[csi-spec]: https://github.com/container-storage-interface/spec
+[block-storage-docs]: https://cloud.ionos.com/storage/block-storage

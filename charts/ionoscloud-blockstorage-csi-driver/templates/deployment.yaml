@@ -1,0 +1,190 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "csi-driver.fullname" . }}-controller
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "csi-driver.selectorLabels" . | nindent 6 }}
+      {{- include "csi-driver.controllerComponentLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.deployment.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "csi-driver.labels" . | nindent 8 }}
+        {{- include "csi-driver.controllerComponentLabels" . | nindent 8 }}
+        {{- with .Values.deployment.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.deployment.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: {{ include "csi-driver.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.deployment.podSecurityContext | nindent 8 }}
+      containers:
+        - name: driver
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          image: "{{ include "image.registry" . }}{{ .Values.driver.controller.image.repository }}:{{ .Values.driver.controller.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.driver.controller.image.pullPolicy }}
+          args:
+            - --endpoint=unix:///csi/csi.sock
+            - --driver-mode=ControllerServer
+            - --driver-name={{ .Values.driverName }}
+            - --cluster-id={{ .Values.clusterName }}
+            - --metrics-endpoint=0.0.0.0:8080
+            {{- include "csi-driver.extraArgs" .Values.driver.controller | indent 12 }}
+          env:
+            - name: IONOS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: {{ .Values.tokenSecretName | required "tokenSecretName is required" }}
+            {{- range $key, $value := .Values.driver.controller.extraEnv }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: driver-http
+              containerPort: 8080
+          resources:
+            {{- toYaml .Values.driver.controller.resources | nindent 12 }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+            - name: override-autmount
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          {{- with .Values.driver.controller.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        - name: provisioner
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          image: "{{ include "image.registry" . }}{{ .Values.provisioner.image.repository }}:{{ .Values.provisioner.image.tag }}"
+          imagePullPolicy: {{ .Values.provisioner.image.pullPolicy }}
+          args:
+            - --csi-address=/csi/csi.sock
+            - --feature-gates=Topology=true,HonorPVReclaimPolicy=true
+            - --strict-topology=false
+            - --immediate-topology=false
+            - --default-fstype=ext4
+            {{- if gt (int .Values.deployment.replicaCount) 1 }}
+            - --leader-election
+            - --leader-election-namespace={{ .Release.Namespace }}
+            {{- end }}
+            {{- include "csi-driver.extraArgs" .Values.provisioner | indent 12 }}
+          env:
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            {{- toYaml .Values.provisioner.resources | nindent 12 }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+        - name: attacher
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          image: "{{ include "image.registry" . }}{{ .Values.attacher.image.repository }}:{{ .Values.attacher.image.tag }}"
+          imagePullPolicy: {{ .Values.attacher.image.pullPolicy }}
+          args:
+            - --csi-address=/csi/csi.sock
+            - --default-fstype=ext4
+            {{- if gt (int .Values.deployment.replicaCount) 1 }}
+            - --leader-election
+            - --leader-election-namespace={{ .Release.Namespace }}
+            {{- end }}
+            {{- include "csi-driver.extraArgs" .Values.attacher | indent 12 }}
+          env:
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            {{- toYaml .Values.attacher.resources | nindent 12 }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+        - name: resizer
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          image: "{{ include "image.registry" . }}{{ .Values.resizer.image.repository }}:{{ .Values.resizer.image.tag }}"
+          imagePullPolicy: {{ .Values.resizer.image.pullPolicy }}
+          args:
+            - --csi-address=/csi/csi.sock
+            {{- if gt (int .Values.deployment.replicaCount) 1 }}
+            - --leader-election
+            - --leader-election-namespace={{ .Release.Namespace }}
+            {{- end }}
+            {{- include "csi-driver.extraArgs" .Values.resizer | indent 12 }}
+          resources:
+            {{- toYaml .Values.resizer.resources | nindent 12 }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+        - name: snapshotter
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          image: "{{ include "image.registry" . }}{{ .Values.snapshotter.image.repository }}:{{ .Values.snapshotter.image.tag }}"
+          imagePullPolicy: {{ .Values.snapshotter.image.pullPolicy }}
+          args:
+            - --csi-address=/csi/csi.sock
+            {{- if gt (int .Values.deployment.replicaCount) 1 }}
+            - --leader-election
+            - --leader-election-namespace={{ .Release.Namespace }}
+            {{- end }}
+            {{- include "csi-driver.extraArgs" .Values.snapshotter | indent 12 }}
+          resources:
+            {{- toYaml .Values.snapshotter.resources | nindent 12 }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+        - name: snapshot-controller
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          image: "{{ include "image.registry" . }}{{ .Values.snapshotController.image.repository }}:{{ .Values.snapshotController.image.tag }}"
+          imagePullPolicy: {{ .Values.snapshotController.image.pullPolicy }}
+          args:
+            {{- if gt (int .Values.deployment.replicaCount) 1 }}
+            - --leader-election
+            - --leader-election-namespace={{ .Release.Namespace }}
+            {{- end }}
+            {{- include "csi-driver.extraArgs" .Values.snapshotController | indent 12 }}
+          resources:
+            {{- toYaml .Values.snapshotController.resources | nindent 12 }}
+      volumes:
+        - name: socket-dir
+          emptyDir: {}
+        - name: override-autmount
+          emptyDir: {}
+        - name: auth-token
+          secret:
+            secretName: {{ .Values.tokenSecretName | required "tokenSecretName is required" }}
+      {{- with .Values.deployment.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
