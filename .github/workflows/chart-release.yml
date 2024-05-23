@@ -1,0 +1,36 @@
+name: Chart release
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+      - 'charts/**/Chart.yaml'
+
+jobs:
+  publish-chart:
+    name: Publish chart
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.4
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish chart to GitHub Container Registry
+        run: ./hack/publish-chart.sh
