@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'charts/**'
-      - .github/workflows/chart-verify.yml
+      - .github/workflows/chart-ci.yml
 
 jobs:
   helm-lint-test:
