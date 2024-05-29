@@ -7,12 +7,14 @@ on:
     paths:
       - 'charts/**/Chart.yaml'
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   publish-chart:
     name: Publish chart
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.4
