@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CT_TARGET_BRANCH: ${{ github.event.repository.default_branch }}
-      CT_CHART_DIRS: charts
+      CT_CHARTS: charts/ionoscloud-blockstorage-csi-driver
       CT_GITHUB_GROUPS: "true"
       CT_USE_HELMIGNORE: "true"
     steps:
