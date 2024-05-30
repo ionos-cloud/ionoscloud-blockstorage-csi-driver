@@ -46,7 +46,8 @@ The file must contain the datacenter ID of the VM in the following format:
 Provide the secret name during installation:
 
 ```console
-helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-csi-driver --set tokenSecretName=csi-secret
+helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
+    --set tokenSecretName=csi-secret
 ```
 
 > [!IMPORTANT]
@@ -59,9 +60,9 @@ Should you need to install multiple CSI drivers using tokens from the same users
 you need to set the `clusterName` value on installation.
 
 ```console
-helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-csi-driver \
+helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
     --set tokenSecretName=csi-secret --set clusterName=production
-helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-csi-driver \
+helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
     --set tokenSecretName=csi-secret --set clusterName=staging
 ```
 
