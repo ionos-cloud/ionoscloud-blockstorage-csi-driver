@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '**.md'
+      - .github/workflows/lint-docs.yml
 
 jobs:
   markdown-link-check:

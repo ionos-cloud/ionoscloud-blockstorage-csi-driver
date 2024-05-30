@@ -6,6 +6,10 @@ on:
     - main
     paths:
       - 'charts/**/Chart.yaml'
+  pull_request:
+    paths:
+      - .github/workflows/chart-release.yml
+      - ./hack/publish-chart.sh
 
 permissions:
   contents: write
@@ -35,4 +39,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish chart to GitHub Container Registry
+        if: github.event_name != 'pull_request'
         run: ./hack/publish-chart.sh
+
+      - name: Publish chart to GitHub Container Registry (dry-run)
+        if: github.event_name == 'pull_request'
+        run: DRY_RUN=1 ./hack/publish-chart.sh

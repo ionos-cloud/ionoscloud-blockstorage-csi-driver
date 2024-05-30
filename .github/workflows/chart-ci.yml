@@ -31,6 +31,18 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.1
 
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44.5.2
+        with:
+          files: |
+            charts/**
+
+      # Force ct to run on workflows triggered by dependabot updates
+      - name: Set CT_ALL
+        if: steps.changed-files.outputs.any_changed != 'true'
+        run: echo CT_ALL=true >> $GITHUB_ENV
+
       - name: Run chart-testing (lint)
         run: ct lint
 
