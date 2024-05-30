@@ -21,7 +21,6 @@ community looks forward to your contributions. 🎉
   - [Reporting Bugs](#reporting-bugs)
   - [Suggesting Enhancements](#suggesting-enhancements)
   - [Your First Code Contribution](#your-first-code-contribution)
-  - [Improving The Documentation](#improving-the-documentation)
 - [Styleguides](#styleguides)
   - [Pull requests](#pull-requests)
 
@@ -126,18 +125,14 @@ Enhancement suggestions are tracked as
 
 ### Your First Code Contribution
 
-<!-- TODO -->
+Is is recommended that you install [pre-commit](https://pre-commit.com/) hooks as a first step:
 
-### Improving The Documentation
+```
+pre-commit install
+```
 
-This project uses [helm-docs](https://github.com/norwoodj/helm-docs) to generate helm chart documentation from a template.
-Make sure to re-generate the docs after you've updated the
-[template](./charts/ionoscloud-blockstorage-csi-driver/README.md.gotmpl),
-[values](./charts/ionoscloud-blockstorage-csi-driver/values.yaml) or
-[Chart.yaml](./charts/ionoscloud-blockstorage-csi-driver/Chart.yaml).
-
-It is recommended that you install a
-[pre-commit hook](https://github.com/norwoodj/helm-docs/blob/master/README.md#pre-commit-hook) to automate this.
+The hooks are set up to perform basic validations on your code, like fixing newlines at the end of a file or linting
+changed helm files.
 
 ## Styleguides
 
@@ -148,6 +143,8 @@ Ensure that they follow the [convention commit](https://www.conventionalcommits.
 
 The pull request title will correspond to the first line in the commit message, with the description populating the
 rest.
+
+Single commits in a pull request do not need to adhere to this.
 
 ## Attribution
 This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!
