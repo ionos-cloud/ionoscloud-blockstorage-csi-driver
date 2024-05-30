@@ -25,7 +25,7 @@ Configurable storage class parameters:
 
 ## Contributing
 
-See [CONTRIBUTING.md] for more information.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 
 [1]: https://cloud.ionos.com/storage/block-storage
 [2]: https://kubernetes.io/docs/concepts/storage/persistent-volumes

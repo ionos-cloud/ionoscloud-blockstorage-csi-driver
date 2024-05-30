@@ -23,9 +23,7 @@ community looks forward to your contributions. 🎉
   - [Your First Code Contribution](#your-first-code-contribution)
   - [Improving The Documentation](#improving-the-documentation)
 - [Styleguides](#styleguides)
-  - [Commit Messages](#commit-messages)
-- [Join The Project Team](#join-the-project-team)
-
+  - [Pull requests](#pull-requests)
 
 
 ## I Have a Question
@@ -134,8 +132,8 @@ Enhancement suggestions are tracked as
 
 This project uses [helm-docs](https://github.com/norwoodj/helm-docs) to generate helm chart documentation from a template.
 Make sure to re-generate the docs after you've updated the
-[template](./charts/ionoscloud-blockstorage-csi-driver/README.gotmpl),
-[values](./charts/ionoscloud-blockstorage-csi-driver/values) or
+[template](./charts/ionoscloud-blockstorage-csi-driver/README.md.gotmpl),
+[values](./charts/ionoscloud-blockstorage-csi-driver/values.yaml) or
 [Chart.yaml](./charts/ionoscloud-blockstorage-csi-driver/Chart.yaml).
 
 It is recommended that you install a
