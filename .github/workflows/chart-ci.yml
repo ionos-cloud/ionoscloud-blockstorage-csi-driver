@@ -62,14 +62,8 @@ jobs:
         run: |
           kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
 
-      # TODO(avorima): Install chart using ct once packages are available
-      - name: Install helm chart (dry-run)
-        run: >
-          helm show crds $CHART | kubectl apply -f -;
-          helm install ionoscloud-blockstorage-csi-driver $CHART -n kube-system -n kube-system -f $CHART/ci/ct-values.yaml --dry-run -o json | jq -r '.manifest' |
-          kubectl apply --dry-run=server --validate=true -f -
-        env:
-          CHART: ./charts/ionoscloud-blockstorage-csi-driver
+      - name: Run chart-testing (install)
+        run: ct install --namespace kube-system --upgrade
 
 
   helm-docs-validate:
