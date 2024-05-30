@@ -1,0 +1,54 @@
+---
+{{- $name := printf "%s-hdd" .Values.className }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+  annotations:
+    {{- include "csi-driver.storageClassAnnotation" (list . $name "true") | indent 4 }}
+parameters:
+  type: HDD
+{{- if or (.Release.IsInstall) (((lookup "storage.k8s.io/v1" "StorageClass" "" $name).parameters).fstype) }}
+  fstype: ext4
+{{- end }}
+provisioner: {{ .Values.driverName }}
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+---
+{{- $name := printf "%s-ssd-standard" .Values.className }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+  annotations:
+    {{- include "csi-driver.storageClassAnnotation" (list . $name "false") | indent 4 }}
+provisioner: {{ .Values.driverName }}
+parameters:
+  type: SSD Standard
+{{- if or (.Release.IsInstall) (((lookup "storage.k8s.io/v1" "StorageClass" "" $name).parameters).fstype) }}
+  fstype: ext4
+{{- end }}
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+---
+{{- $name := printf "%s-ssd-premium" .Values.className }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+  annotations:
+    {{- include "csi-driver.storageClassAnnotation" (list . $name "false") | indent 4 }}
+provisioner: {{ .Values.driverName }}
+parameters:
+  type: SSD Premium
+{{- if or (.Release.IsInstall) (((lookup "storage.k8s.io/v1" "StorageClass" "" $name).parameters).fstype) }}
+  fstype: ext4
+{{- end }}
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true

@@ -1,0 +1,316 @@
+# Default values for ionoscloud-blockstorage-csi-driver.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Name of the driver in the storage class.
+driverName: cloud.ionos.com
+# -- Name used to identify managed storage resources.
+clusterName: k8s
+# -- Name of the secret that contains the token used for cloud API authentication. Must contain the key "token".
+tokenSecretName: ""
+# -- Name of VolumeSnapshotClass. Also used as prefix for StorageClasses.
+className: ionos-cloud
+
+# -- Specify a custom name override. This only influences Kubernetes resource names, not properties.
+nameOverride: ""
+# -- Specify a custom fullname override. This only influences Kubernetes resource names, not properties.
+fullnameOverride: ""
+
+# -- (string) Specify a custom registry name that will be used as prefix for all images.
+# Useful when pulling images from a registry mirror.
+# @default -- Omit if empty
+registry:
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+driver:
+  controller:
+    # -- Additional command-line arguments
+    # @section -- Controller server
+    extraArgs: {}
+    # -- Additional environment variables
+    # @section -- Controller server
+    extraEnv: []
+    image:
+      # -- Image repository
+      # @section -- Controller server
+      repository: ghcr.io/ionos-cloud/ionoscloud-blockstorage-csi-driver
+      # -- Image tag
+      # @section -- Controller server
+      # @default -- Defaults to appVersion
+      tag:
+      # -- Image pull policy
+      # @section -- Controller server
+      pullPolicy: IfNotPresent
+    # -- Resource requests and limits
+    # @section -- Controller server
+    resources:
+      requests:
+        cpu: 10m
+        memory: 25Mi
+      limits:
+        memory: 100Mi
+    # Additional volumeMounts for the controller server
+    # @ignored
+    volumeMounts: []
+    # - name: foo
+    #   mountPath: "/etc/foo"
+    #   readOnly: true
+
+  node:
+    # -- Additional command-line arguments
+    # @section -- Node server
+    extraArgs: {}
+    # -- Additional environment variables
+    # @section -- Node server
+    extraEnv: []
+    image:
+      # -- Image repository
+      # @section -- Node server
+      repository: ghcr.io/ionos-cloud/ionoscloud-blockstorage-csi-driver
+      # -- Image tag
+      # @section -- Node server
+      # @default -- Defaults to appVersion
+      tag:
+      # -- Image pull policy
+      # @section -- Node server
+      pullPolicy: IfNotPresent
+    # -- Resource requests and limits
+    # @section -- Node server
+    resources:
+      requests:
+        cpu: 10m
+        memory: 25Mi
+      limits:
+        memory: 50Mi
+
+provisioner:
+  # -- Additional command-line arguments
+  # @section -- Provisioner
+  extraArgs:
+    timeout: 930s
+  image:
+    # -- Image repository
+    # @section -- Provisioner
+    repository: registry.k8s.io/sig-storage/csi-provisioner
+    # -- Image tag
+    # @section -- Provisioner
+    tag: v3.6.4
+    # -- Image pull policy
+    # @section -- Provisioner
+    pullPolicy: IfNotPresent
+  # -- Resource requests and limits
+  # @section -- Provisioner
+  resources:
+    requests:
+      cpu: 10m
+      memory: 25Mi
+    limits:
+      memory: 100Mi
+
+attacher:
+  # -- Additional command-line arguments
+  # @section -- Attacher
+  extraArgs:
+    timeout: 270s
+  image:
+    # -- Image repository
+    # @section -- Attacher
+    repository: registry.k8s.io/sig-storage/csi-attacher
+    # -- Image tag
+    # @section -- Attacher
+    tag: v4.5.1
+    # -- Image pull policy
+    # @section -- Attacher
+    pullPolicy: IfNotPresent
+  # -- Resource requests and limits
+  # @section -- Attacher
+  resources:
+    requests:
+      cpu: 10m
+      memory: 25Mi
+    limits:
+      memory: 100Mi
+
+resizer:
+  # -- Additional command-line arguments
+  # @section -- Resizer
+  extraArgs:
+    timeout: 150s
+  image:
+    # -- Image repository
+    # @section -- Resizer
+    repository: registry.k8s.io/sig-storage/csi-resizer
+    # -- Image tag
+    # @section -- Resizer
+    tag: v1.10.1
+    # -- Image pull policy
+    # @section -- Resizer
+    pullPolicy: IfNotPresent
+  # -- Resource requests and limits
+  # @section -- Resizer
+  resources:
+    requests:
+      cpu: 10m
+      memory: 25Mi
+    limits:
+      memory: 100Mi
+
+snapshotter:
+  # -- Additional command-line arguments
+  # @section -- Snapshotter
+  extraArgs:
+    timeout: 300s
+  image:
+    # -- Image repository
+    # @section -- Snapshotter
+    repository: registry.k8s.io/sig-storage/csi-snapshotter
+    # -- Image tag
+    # @section -- Snapshotter
+    tag: v6.3.4
+    # -- Image pull policy
+    # @section -- Snapshotter
+    pullPolicy: IfNotPresent
+  # -- Resource requests and limits
+  # @section -- Snapshotter
+  resources:
+    requests:
+      cpu: 10m
+      memory: 25Mi
+    limits:
+      memory: 100Mi
+
+snapshotController:
+  # -- Additional command-line arguments
+  # @section -- Snapshot controller
+  extraArgs: {}
+  image:
+    # -- Image repository
+    # @section -- Snapshot controller
+    repository: registry.k8s.io/sig-storage/snapshot-controller
+    # -- Image tag
+    # @section -- Snapshot controller
+    tag: v6.3.4
+    # -- Image pull policy
+    # @section -- Snapshot controller
+    pullPolicy: IfNotPresent
+  # -- Resource requests and limits
+  # @section -- Snapshot controller
+  resources:
+    requests:
+      cpu: 10m
+      memory: 25Mi
+    limits:
+      memory: 100Mi
+
+registrar:
+  # -- Additional command-line arguments
+  # @section -- Node driver registrar
+  extraArgs: {}
+  image:
+    # -- Image repository
+    # @section -- Node driver registrar
+    repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
+    # -- Image tag
+    # @section -- Node driver registrar
+    tag: v2.10.1
+    # -- Image pull policy
+    # @section -- Node driver registrar
+    pullPolicy: IfNotPresent
+  # -- Resource requests and limits
+  # @section -- Node driver registrar
+  resources:
+    requests:
+      cpu: 10m
+      memory: 15Mi
+    limits:
+      memory: 30Mi
+
+deployment:
+  # -- Number of Deployment pods. Setting this higher than 1 will enable leader election.
+  # @section -- Deployment
+  replicaCount: 1
+  # -- List of image pull secret names for Deployment pods.
+  # @section -- Deployment
+  imagePullSecrets: []
+  # -- Additional annotations for Deployment pods.
+  # @section -- Deployment
+  podAnnotations: {}
+  # -- Additional labels for Deployment pods.
+  # @section -- Deployment
+  podLabels: {}
+  # -- Security context for Deployment pods.
+  # @section -- Deployment
+  podSecurityContext: {}
+  # -- Security context for Deployment containers.
+  # @section -- Deployment
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+  # -- Node selector for Deployment pods.
+  # @section -- Deployment
+  nodeSelector: {}
+  # -- Tolerations for Deployemnt pods.
+  # @section -- Deployment
+  tolerations: []
+  # -- Affinity for Deployment pods.
+  # @section -- Deployment
+  affinity: {}
+  # -- Additional volumes on the output Deployment definition.
+  # @ignored
+  volumes: []
+    # - name: foo
+    #   secret:
+    #     secretName: mysecret
+    #     optional: false
+
+daemonset:
+  # -- List of image pull secret names for Daemonset pods.
+  # @section -- Daemonset
+  imagePullSecrets: []
+  # -- Additional annotations for Daemonset pods.
+  # @section -- Daemonset
+  podAnnotations: {}
+  # -- Additional labels for Daemonset pods.
+  # @section -- Daemonset
+  podLabels: {}
+  # -- Security context for Daemonset pods.
+  # @section -- Daemonset
+  podSecurityContext: {}
+  # -- Node selector for Daemonset pods.
+  # @section -- Daemonset
+  nodeSelector: {}
+  # -- Tolerations for Daemonset pods.
+  # @section -- Daemonset
+  tolerations: []
+  # -- Affinity for Daemonset pods.
+  # @section -- Daemonset
+  affinity: {}
+
+monitoring:
+  # -- If true, render Prometheus PodMonitor resource.
+  # @section -- Monitoring
+  enabled: false
+  # -- Speciy name override for the PodMonitor.
+  # @section -- Monitoring
+  nameOverride: ""
+  # -- Specify namespace override for the PodMonitor.
+  # @section -- Monitoring
+  # @default -- Release namespace
+  namespace: ""
+  # -- Additional labels for the PodMonitor.
+  # @section -- Monitoring
+  additionalLabels: {}
+  # -- Metrics scrape interval as duration string.
+  # @section -- Monitoring
+  scrapeInterval: 30s

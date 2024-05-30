@@ -1,0 +1,28 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  {{- if .Values.monitoring.nameOverride }}
+  name: {{ .Values.monitoring.nameOverride }}
+  {{- else }}
+  name: {{ include "csi-driver.fullname" . }}
+  {{- end }}
+  {{- if .Values.monitoring.namespace }}
+  namespace: {{ .Values.monitoring.namespace }}
+  {{- end }}
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+    {{- with .Values.monitoring.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  podMetricsEndpoints:
+    - port: driver-http
+      interval: {{ .Values.monitoring.scrapeInterval }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Values.monitoring.namespace | default .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "csi-driver.selectorLabels" . | nindent 6 }}
+{{- end }}

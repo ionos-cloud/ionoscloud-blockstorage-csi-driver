@@ -1,0 +1,17 @@
+---
+apiVersion: v2
+name: ionoscloud-blockstorage-csi-driver
+description: IONOS Cloud Container Storage Interface (CSI) driver.
+type: application
+keywords:
+  - csi
+  - ionos-cloud
+version: 0.1.0
+appVersion: "v1.7.0-rc.0"
+kubeVersion: ">=1.20.0-0"
+home: https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver
+sources:
+  - https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver
+maintainers:
+  - name: avorima
+    url: https://github.com/avorima

@@ -1,0 +1,152 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "csi-driver.fullname" . }}
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      {{- include "csi-driver.selectorLabels" . | nindent 6 }}
+      {{- include "csi-driver.nodeComponentLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.daemonset.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "csi-driver.labels" . | nindent 8 }}
+        {{- include "csi-driver.nodeComponentLabels" . | nindent 8 }}
+        {{- with .Values.daemonset.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.daemonset.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      automountServiceAccountToken: false
+      priorityClassName: system-node-critical
+      containers:
+        - name: driver
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+          image: "{{ include "image.registry" . }}{{ .Values.driver.node.image.repository }}:{{ .Values.driver.node.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.driver.node.image.pullPolicy }}
+          args:
+            - --endpoint=unix:///csi/csi.sock
+            - --driver-mode=NodeServer
+            - --driver-name={{ .Values.driverName }}
+            - --cluster-id={{ .Values.clusterName }}
+            - --metrics-endpoint=0.0.0.0:8080
+            {{- include "csi-driver.extraArgs" .Values.driver.node | indent 12 }}
+          env:
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            {{- range $key, $value := .Values.driver.node.extraEnv }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: driver-http
+              containerPort: 8080
+          resources:
+            {{- toYaml .Values.driver.node.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /csi
+              name: socket-dir
+            - name: fs-mountpoint-dir
+              mountPath: /var/lib/kubelet/pods
+              mountPropagation: "Bidirectional"
+            - name: block-mountpoint-dir
+              mountPath: /var/lib/kubelet/plugins/kubernetes.io/csi
+              mountPropagation: "Bidirectional"
+            - name: device-dir
+              mountPath: /dev
+            - name: udev-data-dir
+              mountPath: /run/udev/data
+            - name: etc-dir
+              mountPath: /etc
+        - name: node-driver-registrar
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            privileged: false
+            readOnlyRootFilesystem: true
+          image: "{{ include "image.registry" . }}{{ .Values.registrar.image.repository }}:{{ .Values.registrar.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          args:
+            - --csi-address=/csi/csi.sock
+            - --kubelet-registration-path=/var/lib/csi/{{ .Chart.Name }}/csi.sock
+            {{- include "csi-driver.extraArgs" .Values.registar | indent 12 }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "rm -f /var/lib/csi/csi-driver/csi.sock"]
+          env:
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            {{- toYaml .Values.registrar.resources | nindent 12 }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+            - name: registration-dir
+              mountPath: /registration/
+      volumes:
+        - name: registration-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins_registry/
+            type: DirectoryOrCreate
+        - name: socket-dir
+          hostPath:
+            path: /var/lib/csi/{{ .Chart.Name }}
+            type: DirectoryOrCreate
+        - name: block-mountpoint-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/kubernetes.io/csi
+            type: DirectoryOrCreate
+        - name: fs-mountpoint-dir
+          hostPath:
+            path: /var/lib/kubelet/pods
+            type: Directory
+        - name: device-dir
+          hostPath:
+            path: /dev
+            type: Directory
+        - name: udev-data-dir
+          hostPath:
+            path: /run/udev/data
+            type: Directory
+        - name: etc-dir
+          hostPath:
+            path: /etc/
+            type: Directory
+      {{- with .Values.daemonset.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.daemonset.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.daemonset.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

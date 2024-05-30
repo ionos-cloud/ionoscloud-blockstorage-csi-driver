@@ -1,0 +1,17 @@
+{{- if gt (int .Values.replicaCount) 1 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "csi-driver.fullname" . }}
+  labels:
+    {{- include "csi-driver.labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "csi-driver.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "csi-driver.fullname" . }}
+{{- end }}
