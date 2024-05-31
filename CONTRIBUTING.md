@@ -11,7 +11,7 @@ community looks forward to your contributions. 🎉
 > the project and show your appreciation, which we would also be very happy about:
 > - Star the project
 > - Tweet about it
-> - Refer this project in your project's readme
+> - Refer this project in your project's README
 > - Mention the project at local meetups and tell your friends/colleagues
 
 ## Table of Contents
@@ -21,7 +21,7 @@ community looks forward to your contributions. 🎉
   - [Reporting Bugs](#reporting-bugs)
   - [Suggesting Enhancements](#suggesting-enhancements)
   - [Your First Code Contribution](#your-first-code-contribution)
-- [Styleguides](#styleguides)
+- [Style guides](#style-guides)
   - [Pull requests](#pull-requests)
 
 
@@ -134,7 +134,7 @@ pre-commit install
 The hooks are set up to perform basic validations on your code, like fixing newlines at the end of a file or linting
 changed helm files.
 
-## Styleguides
+## Style guides
 
 ### Pull requests
 
