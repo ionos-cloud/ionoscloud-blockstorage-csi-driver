@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.23
+    hooks:
+      - id: helmlint
+        files: ^charts/
+
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.13.1
+    hooks:
+      - id: helm-docs
+        files: (README\.md\.gotmpl|(Chart|values)\.yaml)$
+
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.12.2
+    hooks:
+      - id: markdown-link-check
+        args: [-q]

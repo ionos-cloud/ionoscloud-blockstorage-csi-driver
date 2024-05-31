@@ -7,6 +7,9 @@
 
 Container Storage Interface (CSI) plugin for IONOS Cloud [block storage][1].
 
+The repository currently only contains the Helm chart.
+The actual driver will be open sourced later.
+
 ## Features
 
 * **Static Provisioning**: Associate an externally-created volume with a [Persistent Volume][2] (PV) for consumption
@@ -25,7 +28,7 @@ Configurable storage class parameters:
 
 ## Contributing
 
-See [CONTRIBUTING.md] for more information.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 
 [1]: https://cloud.ionos.com/storage/block-storage
 [2]: https://kubernetes.io/docs/concepts/storage/persistent-volumes
