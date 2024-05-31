@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 name: ionoscloud-blockstorage-csi-driver
-description: IONOS Cloud Container Storage Interface (CSI) driver.
+description: Container Storage Interface (CSI) driver for IONOS Cloud block storage.
 type: application
 keywords:
   - csi

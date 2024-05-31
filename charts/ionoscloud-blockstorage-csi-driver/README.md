@@ -2,21 +2,7 @@
 
 ![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.7.0-rc.0](https://img.shields.io/badge/AppVersion-v1.7.0--rc.0-informational?style=flat-square)
 
-IONOS Cloud Container Storage Interface (CSI) driver.
-
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
-
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| avorima |  | <https://github.com/avorima> |
-
-## Source Code
-
-* <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
-
----
 
 The [Container Storage Interface][csi-spec] (CSI) driver plugin communicates with the [IONOS Cloud API][cloud-api] to manage storage.
 The visibility and permissions it has depend on the authentication token it is given.
