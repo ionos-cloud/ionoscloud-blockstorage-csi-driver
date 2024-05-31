@@ -1,8 +1,8 @@
 # ionoscloud-blockstorage-csi-driver
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/container-storage-interface/spec/master/logo.png" width="80" style="vertical-align: middle;">
-<img src="./docs/assets/images/LOGO_IONOS_Blue_RGB.png" width="200" style="vertical-align: middle;">
+  <img src="https://raw.githubusercontent.com/container-storage-interface/spec/master/logo.png" width="200">
+  <img src="./docs/assets/images/LOGO_IONOS_Blue_RGB.png" width="200">
 </p>
 
 Container Storage Interface (CSI) plugin for IONOS Cloud [block storage][1].
