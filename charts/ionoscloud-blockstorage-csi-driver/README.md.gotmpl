@@ -2,15 +2,9 @@
 
 {{ template "chart.badgesSection" . }}
 
-{{ template "chart.description" . }}
-
 {{ template "chart.homepageLine" . }}
 
-{{ template "chart.maintainersSection" . }}
-
-{{ template "chart.sourcesSection" . }}
-
-The [Container Storage Interface][csi-spec] (CSI) driver plugin communicates with the [IONOS Cloud API][cloud-api] to manage storages.
+The [Container Storage Interface][csi-spec] (CSI) driver plugin communicates with the [IONOS Cloud API][cloud-api] to manage storage.
 The visibility and permissions it has depend on the authentication token it is given.
 
 Check out [this page][token-docs] to learn more about managing tokens.
@@ -45,11 +39,11 @@ helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm
 ```
 
 > [!IMPORTANT]
-> Be aware that tokens have a limited liftime. The CSI controller deployment needs to restarted every time the token is updated.
+> Be aware that tokens have a limited lifetime. The CSI controller deployment needs to be restarted every time the token is updated.
 
 ### Multi-tenancy setup
 
-The default settings of CSI driver helm chart are meant to be used in a single-tenancy manner.
+The default settings of the CSI driver helm chart are meant to be used in a single-tenancy manner.
 Should you need to install multiple CSI drivers using tokens from the same users or contracts, e.g. if you manage more than 1 cluster,
 you need to set the `clusterName` value on installation.
 

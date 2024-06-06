@@ -1,22 +1,10 @@
 # ionoscloud-blockstorage-csi-driver
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.7.0-rc.0](https://img.shields.io/badge/AppVersion-v1.7.0--rc.0-informational?style=flat-square)
-
-IONOS Cloud Container Storage Interface (CSI) driver.
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.7.0-rc.0](https://img.shields.io/badge/AppVersion-v1.7.0--rc.0-informational?style=flat-square)
 
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
 
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| avorima |  | <https://github.com/avorima> |
-
-## Source Code
-
-* <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
-
-The [Container Storage Interface][csi-spec] (CSI) driver plugin communicates with the [IONOS Cloud API][cloud-api] to manage storages.
+The [Container Storage Interface][csi-spec] (CSI) driver plugin communicates with the [IONOS Cloud API][cloud-api] to manage storage.
 The visibility and permissions it has depend on the authentication token it is given.
 
 Check out [this page][token-docs] to learn more about managing tokens.
@@ -51,11 +39,11 @@ helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm
 ```
 
 > [!IMPORTANT]
-> Be aware that tokens have a limited liftime. The CSI controller deployment needs to restarted every time the token is updated.
+> Be aware that tokens have a limited lifetime. The CSI controller deployment needs to be restarted every time the token is updated.
 
 ### Multi-tenancy setup
 
-The default settings of CSI driver helm chart are meant to be used in a single-tenancy manner.
+The default settings of the CSI driver helm chart are meant to be used in a single-tenancy manner.
 Should you need to install multiple CSI drivers using tokens from the same users or contracts, e.g. if you manage more than 1 cluster,
 you need to set the `clusterName` value on installation.
 
@@ -105,7 +93,7 @@ helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm
 | deployment.podSecurityContext | object | `{}` | Security context for Deployment pods. |
 | deployment.replicaCount | int | `1` | Number of Deployment pods. Setting this higher than 1 will enable leader election. |
 | deployment.securityContext | object | `{"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}` | Security context for Deployment containers. |
-| deployment.tolerations | list | `[]` | Tolerations for Deployemnt pods. |
+| deployment.tolerations | list | `[]` | Tolerations for Deployment pods. |
 
 ### Controller server
 
@@ -135,7 +123,7 @@ helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm
 |-----|------|---------|-------------|
 | monitoring.additionalLabels | object | `{}` | Additional labels for the PodMonitor. |
 | monitoring.enabled | bool | `false` | If true, render Prometheus PodMonitor resource. |
-| monitoring.nameOverride | string | `""` | Speciy name override for the PodMonitor. |
+| monitoring.nameOverride | string | `""` | Specify name override for the PodMonitor. |
 | monitoring.namespace | string | Release namespace | Specify namespace override for the PodMonitor. |
 | monitoring.scrapeInterval | string | `"30s"` | Metrics scrape interval as duration string. |
 

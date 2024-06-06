@@ -260,7 +260,7 @@ deployment:
   # -- Node selector for Deployment pods.
   # @section -- Deployment
   nodeSelector: {}
-  # -- Tolerations for Deployemnt pods.
+  # -- Tolerations for Deployment pods.
   # @section -- Deployment
   tolerations: []
   # -- Affinity for Deployment pods.
@@ -301,7 +301,7 @@ monitoring:
   # -- If true, render Prometheus PodMonitor resource.
   # @section -- Monitoring
   enabled: false
-  # -- Speciy name override for the PodMonitor.
+  # -- Specify name override for the PodMonitor.
   # @section -- Monitoring
   nameOverride: ""
   # -- Specify namespace override for the PodMonitor.
