@@ -5,7 +5,7 @@ metadata:
   {{- if .Values.monitoring.nameOverride }}
   name: {{ .Values.monitoring.nameOverride }}
   {{- else }}
-  name: {{ include "csi-driver.fullname" . }}
+  name: {{ include "csi-driver.name" . }}
   {{- end }}
   {{- if .Values.monitoring.namespace }}
   namespace: {{ .Values.monitoring.namespace }}

@@ -1,6 +1,6 @@
 # ionoscloud-blockstorage-csi-driver
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.7.0-rc.0](https://img.shields.io/badge/AppVersion-v1.7.0--rc.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.7.0-rc.0](https://img.shields.io/badge/AppVersion-v1.7.0--rc.0-informational?style=flat-square)
 
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
 
@@ -34,7 +34,8 @@ The file must contain the datacenter ID of the VM in the following format:
 Provide the secret name during installation:
 
 ```console
-helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
+helm install -n kube-system ionoscloud-blockstorage-csi-driver \
+    oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
     --set tokenSecretName=csi-secret
 ```
 
@@ -48,9 +49,11 @@ Should you need to install multiple CSI drivers using tokens from the same users
 you need to set the `clusterName` value on installation.
 
 ```console
-helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
+helm install -n kube-system ionoscloud-blockstorage-csi-driver \
+    oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
     --set tokenSecretName=csi-secret --set clusterName=production
-helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
+helm install -n kube-system ionoscloud-blockstorage-csi-driver \
+    oci://ghcr.io/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver \
     --set tokenSecretName=csi-secret --set clusterName=staging
 ```
 
@@ -184,13 +187,12 @@ helm install -n kube-system ionoscloud-csi-driver oci://ghcr.io/ionos-cloud/helm
 | className | string | `"ionos-cloud"` | Name of VolumeSnapshotClass. Also used as prefix for StorageClasses. |
 | clusterName | string | `"k8s"` | Name used to identify managed storage resources. |
 | driverName | string | `"cloud.ionos.com"` | Name of the driver in the storage class. |
-| fullnameOverride | string | `""` | Specify a custom fullname override. This only influences Kubernetes resource names, not properties. |
 | nameOverride | string | `""` | Specify a custom name override. This only influences Kubernetes resource names, not properties. |
 | registry | string | Omit if empty | Specify a custom registry name that will be used as prefix for all images. Useful when pulling images from a registry mirror. |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
-| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated from template |
 | tokenSecretName | string | `""` | Name of the secret that contains the token used for cloud API authentication. Must contain the key "token". |
 
 [cloud-api]: https://api.ionos.com/docs/cloud/v6/

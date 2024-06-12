@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ include "csi-driver.fullname" . }}
+  name: {{ include "csi-driver.name" . }}
   labels:
     {{- include "csi-driver.labels" . | nindent 4 }}
 spec:
