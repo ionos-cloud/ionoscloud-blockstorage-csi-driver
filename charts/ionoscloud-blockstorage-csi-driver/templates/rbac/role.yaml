@@ -3,7 +3,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "csi-driver.fullname" . }}
+  name: {{ include "csi-driver.name" . }}
   labels:
     {{- include "csi-driver.labels" . | nindent 4 }}
 rules:

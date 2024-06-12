@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "csi-driver.fullname" . }}-controller
+  name: {{ include "csi-driver.name" . }}-controller
   labels:
     {{- include "csi-driver.labels" . | nindent 4 }}
 spec:

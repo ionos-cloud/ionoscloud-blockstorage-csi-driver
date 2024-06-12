@@ -13,8 +13,6 @@ className: ionos-cloud
 
 # -- Specify a custom name override. This only influences Kubernetes resource names, not properties.
 nameOverride: ""
-# -- Specify a custom fullname override. This only influences Kubernetes resource names, not properties.
-fullnameOverride: ""
 
 # -- (string) Specify a custom registry name that will be used as prefix for all images.
 # Useful when pulling images from a registry mirror.
@@ -28,7 +26,7 @@ serviceAccount:
   automount: true
   # -- Annotations to add to the service account
   annotations: {}
-  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  # -- The name of the service account to use. If not set and create is true, a name is generated from template
   name: ""
 
 driver:
