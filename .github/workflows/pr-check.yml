@@ -8,6 +8,7 @@ on:
       - opened
       - edited
       - synchronize
+      - ready_for_review
   pull_request_target:
     branches:
       - main
@@ -15,6 +16,7 @@ on:
       - opened
       - edited
       - synchronize
+      - ready_for_review
 
 permissions:
   pull-requests: read
