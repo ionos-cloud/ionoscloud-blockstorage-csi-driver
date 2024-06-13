@@ -1,14 +1,20 @@
 name: PR check
 
 on:
-  pull_request: &filters
+  pull_request:
     branches:
       - main
     types:
       - opened
       - edited
       - synchronize
-  pull_request_target: *filters
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+      - synchronize
 
 permissions:
   pull-requests: read
