@@ -21,8 +21,8 @@ community looks forward to your contributions. 🎉
   - [Reporting Bugs](#reporting-bugs)
   - [Suggesting Enhancements](#suggesting-enhancements)
   - [Your First Code Contribution](#your-first-code-contribution)
+  - [Open a pull request](#open-a-pull-request)
 - [Style guides](#style-guides)
-  - [Pull requests](#pull-requests)
 
 
 ## I Have a Question
@@ -134,17 +134,14 @@ pre-commit install
 The hooks are set up to perform basic validations on your code, like fixing newlines at the end of a file or linting
 changed helm files.
 
+### Open a pull request
+
+Pull request titles must conform to [convention commit](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+This is enforced by a GitHub action.
+
+If your pull request is a work-in-progress (WIP) it should be opened as [draft pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests#draft-pull-requests).
+
 ## Style guides
-
-### Pull requests
-
-Pull request title and description will be used as squash commit message after the merge.
-Ensure that they follow the [convention commit](https://www.conventionalcommits.org/en/v1.0.0/) specification.
-
-The pull request title will correspond to the first line in the commit message, with the description populating the
-rest.
-
-Single commits in a pull request do not need to adhere to this.
 
 ## Attribution
 This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!
