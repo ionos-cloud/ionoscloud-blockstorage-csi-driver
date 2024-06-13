@@ -136,7 +136,7 @@ changed helm files.
 
 ### Open a pull request
 
-Pull request titles must conform to [convention commit](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+Pull request titles must conform to [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 This is enforced by a GitHub action.
 
 If your pull request is a work-in-progress (WIP) it should be opened as [draft pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests#draft-pull-requests).
