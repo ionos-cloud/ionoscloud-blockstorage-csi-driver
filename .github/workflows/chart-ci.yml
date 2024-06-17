@@ -16,7 +16,7 @@ jobs:
       CT_USE_HELMIGNORE: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0
 
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.7
       - name: Run helm-docs
         uses: docker://jnorwood/helm-docs:v1.13.1
       - name: Check for changes
