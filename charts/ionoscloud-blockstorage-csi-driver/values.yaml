@@ -101,7 +101,7 @@ provisioner:
     repository: registry.k8s.io/sig-storage/csi-provisioner
     # -- Image tag
     # @section -- Provisioner
-    tag: v3.6.4
+    tag: v5.1.0
     # -- Image pull policy
     # @section -- Provisioner
     pullPolicy: IfNotPresent
@@ -125,7 +125,7 @@ attacher:
     repository: registry.k8s.io/sig-storage/csi-attacher
     # -- Image tag
     # @section -- Attacher
-    tag: v4.5.1
+    tag: v4.7.0
     # -- Image pull policy
     # @section -- Attacher
     pullPolicy: IfNotPresent
@@ -149,7 +149,7 @@ resizer:
     repository: registry.k8s.io/sig-storage/csi-resizer
     # -- Image tag
     # @section -- Resizer
-    tag: v1.10.1
+    tag: v1.12.0
     # -- Image pull policy
     # @section -- Resizer
     pullPolicy: IfNotPresent
@@ -173,7 +173,7 @@ snapshotter:
     repository: registry.k8s.io/sig-storage/csi-snapshotter
     # -- Image tag
     # @section -- Snapshotter
-    tag: v6.3.4
+    tag: v8.1.0
     # -- Image pull policy
     # @section -- Snapshotter
     pullPolicy: IfNotPresent
@@ -196,7 +196,7 @@ snapshotController:
     repository: registry.k8s.io/sig-storage/snapshot-controller
     # -- Image tag
     # @section -- Snapshot controller
-    tag: v6.3.4
+    tag: v8.1.0
     # -- Image pull policy
     # @section -- Snapshot controller
     pullPolicy: IfNotPresent
@@ -219,7 +219,7 @@ registrar:
     repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
     # -- Image tag
     # @section -- Node driver registrar
-    tag: v2.10.1
+    tag: v2.12.0
     # -- Image pull policy
     # @section -- Node driver registrar
     pullPolicy: IfNotPresent

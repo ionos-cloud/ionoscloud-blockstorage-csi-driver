@@ -76,7 +76,6 @@ spec:
           imagePullPolicy: {{ .Values.provisioner.image.pullPolicy }}
           args:
             - --csi-address=/csi/csi.sock
-            - --feature-gates=Topology=true,HonorPVReclaimPolicy=true
             - --strict-topology=false
             - --immediate-topology=false
             - --default-fstype=ext4
