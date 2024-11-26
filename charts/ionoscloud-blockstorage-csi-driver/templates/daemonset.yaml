@@ -50,6 +50,9 @@ spec:
             - --driver-name={{ .Values.driverName }}
             - --cluster-id={{ .Values.clusterName }}
             - --metrics-endpoint=0.0.0.0:8080
+            {{- if and (not .Release.IsInstall) .Values.legacyTopologyKeys }}
+            - --legacy-topology-keys
+            {{- end }}
             {{- include "csi-driver.extraArgs" .Values.driver.node | indent 12 }}
           env:
             - name: KUBE_NODE_NAME

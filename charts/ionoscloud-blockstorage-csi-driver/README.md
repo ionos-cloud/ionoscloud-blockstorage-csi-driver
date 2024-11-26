@@ -67,9 +67,35 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 The provided CRDs were updated to contain CEL markers for validation, which is why the **minimum required version** is now 1.25.
 The helm CLI will ignore any changes to CRDs which is why they must be updated manually before running `helm upgrade`.
 
-```
+```console
 helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 ```
+
+#### Topology keys
+
+The node driver exposes a new set of topology keys. These keys are converted into node labels and referenced by
+`nodeSelectorTerms` on dynamically created PersistentVolumes.
+To not break existing resources the helm chart re-enables the legacy keys by default, but this option will be removed in
+a future release.
+
+Disabling legacy topology keys on the node driver will remove labels from nodes.
+This will cause the nodeSelectorTerms to no longer match and provisioned PersistentVolumes will no longer be modifiable.
+NodeSelectorTerms are immutable so the resources must be recreated.
+
+* Set key `enterprise.cloud.ionos.com/datacenter-id` to `cloud.ionos.com/datacenter-id` on a PersistentVolume
+* Set reclaim policy to `Retain` on the original PersistentVolume to prevent volume deletion
+* Delete original PersistentVolume
+* Create new PersistentVolume
+
+The provided migration tool implements these steps as well as some additions like storing the
+unmodified PersistentVolume definitions on disk and waiting for PersistentVolumeClaims to recover.
+
+```console
+go -C hack/tools run ./migrate-pv-topology --kubeconfig mycluster.conf --backup-dir backup --dry-run
+```
+
+> [!NOTE]
+> This is a potentially disruptive operation. Volume data should be backed up for safety, e.g. with [`VolumeSnapshots`][volume-snapshot-docs].
 
 ## Values
 
@@ -198,10 +224,11 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | className | string | `"ionos-cloud"` | Name of VolumeSnapshotClass. Also used as prefix for StorageClasses. |
 | clusterName | string | `"k8s"` | Name used to identify managed storage resources. |
 | driverName | string | `"cloud.ionos.com"` | Name of the driver in the storage class. |
+| legacyTopologyKeys | bool | `true` | If true, the node driver will use deprecated topology keys to restrict moving volumes between datacenters. This flag is only evaluated on upgrades. |
 | nameOverride | string | `""` | Specify a custom name override. This only influences Kubernetes resource names, not properties. |
 | registry | string | Omit if empty | Specify a custom registry name that will be used as prefix for all images. Useful when pulling images from a registry mirror. |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
-| serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
+| serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated from template |
 | tokenSecretName | string | `""` | Name of the secret that contains the token used for cloud API authentication. Must contain the key "token". |
@@ -210,3 +237,4 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 [token-docs]: https://docs.ionos.com/cloud/getting-started/basic-tutorials/manage-authentication-tokens
 [csi-spec]: https://github.com/container-storage-interface/spec
 [block-storage-docs]: https://cloud.ionos.com/storage/block-storage
+[volume-snapshot-docs]: https://kubernetes.io/docs/concepts/storage/volume-snapshots/

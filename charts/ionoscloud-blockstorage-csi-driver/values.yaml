@@ -11,6 +11,9 @@ tokenSecretName: ""
 # -- Name of VolumeSnapshotClass. Also used as prefix for StorageClasses.
 className: ionos-cloud
 
+# -- If true, the node driver will use deprecated topology keys to restrict moving volumes between datacenters. This flag is only evaluated on upgrades.
+legacyTopologyKeys: true
+
 # -- Specify a custom name override. This only influences Kubernetes resource names, not properties.
 nameOverride: ""
 
@@ -22,7 +25,7 @@ registry:
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
-  # -- Automatically mount a ServiceAccount's API credentials?
+  # -- Automatically mount a ServiceAccount's API credentials
   automount: true
   # -- Annotations to add to the service account
   annotations: {}
