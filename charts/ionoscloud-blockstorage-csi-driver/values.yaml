@@ -173,7 +173,7 @@ snapshotter:
     repository: registry.k8s.io/sig-storage/csi-snapshotter
     # -- Image tag
     # @section -- Snapshotter
-    tag: v8.1.0
+    tag: v8.2.0
     # -- Image pull policy
     # @section -- Snapshotter
     pullPolicy: IfNotPresent
@@ -196,7 +196,7 @@ snapshotController:
     repository: registry.k8s.io/sig-storage/snapshot-controller
     # -- Image tag
     # @section -- Snapshot controller
-    tag: v8.1.0
+    tag: v8.2.0
     # -- Image pull policy
     # @section -- Snapshot controller
     pullPolicy: IfNotPresent

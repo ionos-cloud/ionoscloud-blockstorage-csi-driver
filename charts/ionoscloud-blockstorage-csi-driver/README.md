@@ -1,6 +1,6 @@
 # ionoscloud-blockstorage-csi-driver
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.8.0-rc.0](https://img.shields.io/badge/AppVersion-v1.8.0--rc.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.0](https://img.shields.io/badge/AppVersion-v1.9.0--rc.0-informational?style=flat-square)
 
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
 
@@ -67,7 +67,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 The provided CRDs were updated to contain CEL markers for validation, which is why the **minimum required version** is now 1.25.
 The helm CLI will ignore any changes to CRDs which is why they must be updated manually before running `helm upgrade`.
 
-```
+```console
 helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 ```
 
@@ -178,7 +178,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | snapshotController.extraArgs | object | `{}` | Additional command-line arguments |
 | snapshotController.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | snapshotController.image.repository | string | `"registry.k8s.io/sig-storage/snapshot-controller"` | Image repository |
-| snapshotController.image.tag | string | `"v8.1.0"` | Image tag |
+| snapshotController.image.tag | string | `"v8.2.0"` | Image tag |
 | snapshotController.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Snapshotter
@@ -188,7 +188,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | snapshotter.extraArgs | object | `{"timeout":"300s"}` | Additional command-line arguments |
 | snapshotter.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | snapshotter.image.repository | string | `"registry.k8s.io/sig-storage/csi-snapshotter"` | Image repository |
-| snapshotter.image.tag | string | `"v8.1.0"` | Image tag |
+| snapshotter.image.tag | string | `"v8.2.0"` | Image tag |
 | snapshotter.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Other Values

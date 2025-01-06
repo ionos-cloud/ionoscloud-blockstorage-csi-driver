@@ -67,7 +67,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 The provided CRDs were updated to contain CEL markers for validation, which is why the **minimum required version** is now 1.25.
 The helm CLI will ignore any changes to CRDs which is why they must be updated manually before running `helm upgrade`.
 
-```
+```console
 helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 ```
 
