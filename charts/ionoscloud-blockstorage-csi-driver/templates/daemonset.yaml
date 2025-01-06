@@ -56,6 +56,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: IONOS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: {{ .Values.tokenSecretName }}
             {{- range $key, $value := .Values.driver.node.extraEnv }}
             - name: {{ $key }}
               value: "{{ $value }}"

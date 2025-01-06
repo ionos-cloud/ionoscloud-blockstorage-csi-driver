@@ -40,7 +40,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 ```
 
 > [!IMPORTANT]
-> Be aware that tokens have a limited lifetime. The CSI controller deployment needs to be restarted every time the token is updated.
+> Be aware that tokens have a limited lifetime. CSI pods must be restarted every time the token is updated.
 
 ### Multi-tenancy setup
 
