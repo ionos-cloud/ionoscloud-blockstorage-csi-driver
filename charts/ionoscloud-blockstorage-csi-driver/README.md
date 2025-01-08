@@ -1,6 +1,6 @@
 # ionoscloud-blockstorage-csi-driver
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.7.0-rc.0](https://img.shields.io/badge/AppVersion-v1.7.0--rc.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.0](https://img.shields.io/badge/AppVersion-v1.9.0--rc.0-informational?style=flat-square)
 
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
 
@@ -11,7 +11,7 @@ Check out [this page][token-docs] to learn more about managing tokens.
 
 ## Prerequisites
 
-* Kubernetes 1.20+
+* Kubernetes 1.25+
 * Helm 3+
 
 Before installing create a secret that contains your IONOS Cloud authentication token:
@@ -40,7 +40,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 ```
 
 > [!IMPORTANT]
-> Be aware that tokens have a limited lifetime. The CSI controller deployment needs to be restarted every time the token is updated.
+> Be aware that tokens have a limited lifetime. CSI pods must be restarted every time the token is updated.
 
 ### Multi-tenancy setup
 
@@ -60,6 +60,17 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 > [!WARNING]
 > The `clusterName` must not be changed after storage has already been provisioned.
 
+## Upgrade
+
+### From 0.2.0 to 0.3.0
+
+The provided CRDs were updated to contain CEL markers for validation, which is why the **minimum required version** is now 1.25.
+The helm CLI will ignore any changes to CRDs which is why they must be updated manually before running `helm upgrade`.
+
+```console
+helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
+```
+
 ## Values
 
 ### Attacher
@@ -69,7 +80,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 | attacher.extraArgs | object | `{"timeout":"270s"}` | Additional command-line arguments |
 | attacher.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | attacher.image.repository | string | `"registry.k8s.io/sig-storage/csi-attacher"` | Image repository |
-| attacher.image.tag | string | `"v4.5.1"` | Image tag |
+| attacher.image.tag | string | `"v4.7.0"` | Image tag |
 | attacher.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Daemonset
@@ -137,7 +148,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 | provisioner.extraArgs | object | `{"timeout":"930s"}` | Additional command-line arguments |
 | provisioner.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | provisioner.image.repository | string | `"registry.k8s.io/sig-storage/csi-provisioner"` | Image repository |
-| provisioner.image.tag | string | `"v3.6.4"` | Image tag |
+| provisioner.image.tag | string | `"v5.1.0"` | Image tag |
 | provisioner.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Node driver registrar
@@ -147,7 +158,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 | registrar.extraArgs | object | `{}` | Additional command-line arguments |
 | registrar.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | registrar.image.repository | string | `"registry.k8s.io/sig-storage/csi-node-driver-registrar"` | Image repository |
-| registrar.image.tag | string | `"v2.10.1"` | Image tag |
+| registrar.image.tag | string | `"v2.12.0"` | Image tag |
 | registrar.resources | object | `{"limits":{"memory":"30Mi"},"requests":{"cpu":"10m","memory":"15Mi"}}` | Resource requests and limits |
 
 ### Resizer
@@ -157,7 +168,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 | resizer.extraArgs | object | `{"timeout":"150s"}` | Additional command-line arguments |
 | resizer.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | resizer.image.repository | string | `"registry.k8s.io/sig-storage/csi-resizer"` | Image repository |
-| resizer.image.tag | string | `"v1.10.1"` | Image tag |
+| resizer.image.tag | string | `"v1.12.0"` | Image tag |
 | resizer.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Snapshot controller
@@ -167,7 +178,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 | snapshotController.extraArgs | object | `{}` | Additional command-line arguments |
 | snapshotController.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | snapshotController.image.repository | string | `"registry.k8s.io/sig-storage/snapshot-controller"` | Image repository |
-| snapshotController.image.tag | string | `"v6.3.4"` | Image tag |
+| snapshotController.image.tag | string | `"v8.2.0"` | Image tag |
 | snapshotController.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Snapshotter
@@ -177,7 +188,7 @@ helm install -n kube-system ionoscloud-blockstorage-csi-driver \
 | snapshotter.extraArgs | object | `{"timeout":"300s"}` | Additional command-line arguments |
 | snapshotter.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | snapshotter.image.repository | string | `"registry.k8s.io/sig-storage/csi-snapshotter"` | Image repository |
-| snapshotter.image.tag | string | `"v6.3.4"` | Image tag |
+| snapshotter.image.tag | string | `"v8.2.0"` | Image tag |
 | snapshotter.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Other Values
