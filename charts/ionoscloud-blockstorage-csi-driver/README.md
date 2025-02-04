@@ -1,6 +1,6 @@
 # ionoscloud-blockstorage-csi-driver
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.0](https://img.shields.io/badge/AppVersion-v1.9.0--rc.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.1](https://img.shields.io/badge/AppVersion-v1.9.0--rc.1-informational?style=flat-square)
 
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
 
@@ -80,7 +80,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | attacher.extraArgs | object | `{"timeout":"270s"}` | Additional command-line arguments |
 | attacher.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | attacher.image.repository | string | `"registry.k8s.io/sig-storage/csi-attacher"` | Image repository |
-| attacher.image.tag | string | `"v4.7.0"` | Image tag |
+| attacher.image.tag | string | `"v4.8.1"` | Image tag |
 | attacher.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Daemonset
@@ -148,7 +148,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | provisioner.extraArgs | object | `{"timeout":"930s"}` | Additional command-line arguments |
 | provisioner.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | provisioner.image.repository | string | `"registry.k8s.io/sig-storage/csi-provisioner"` | Image repository |
-| provisioner.image.tag | string | `"v5.1.0"` | Image tag |
+| provisioner.image.tag | string | `"v5.2.0"` | Image tag |
 | provisioner.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Node driver registrar
@@ -158,7 +158,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | registrar.extraArgs | object | `{}` | Additional command-line arguments |
 | registrar.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | registrar.image.repository | string | `"registry.k8s.io/sig-storage/csi-node-driver-registrar"` | Image repository |
-| registrar.image.tag | string | `"v2.12.0"` | Image tag |
+| registrar.image.tag | string | `"v2.13.0"` | Image tag |
 | registrar.resources | object | `{"limits":{"memory":"30Mi"},"requests":{"cpu":"10m","memory":"15Mi"}}` | Resource requests and limits |
 
 ### Resizer
@@ -168,7 +168,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | resizer.extraArgs | object | `{"timeout":"150s"}` | Additional command-line arguments |
 | resizer.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | resizer.image.repository | string | `"registry.k8s.io/sig-storage/csi-resizer"` | Image repository |
-| resizer.image.tag | string | `"v1.12.0"` | Image tag |
+| resizer.image.tag | string | `"v1.13.2"` | Image tag |
 | resizer.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Snapshot controller
@@ -178,7 +178,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | snapshotController.extraArgs | object | `{}` | Additional command-line arguments |
 | snapshotController.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | snapshotController.image.repository | string | `"registry.k8s.io/sig-storage/snapshot-controller"` | Image repository |
-| snapshotController.image.tag | string | `"v8.2.0"` | Image tag |
+| snapshotController.image.tag | string | `"v8.2.1"` | Image tag |
 | snapshotController.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Snapshotter
@@ -188,7 +188,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | snapshotter.extraArgs | object | `{"timeout":"300s"}` | Additional command-line arguments |
 | snapshotter.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | snapshotter.image.repository | string | `"registry.k8s.io/sig-storage/csi-snapshotter"` | Image repository |
-| snapshotter.image.tag | string | `"v8.2.0"` | Image tag |
+| snapshotter.image.tag | string | `"v8.2.1"` | Image tag |
 | snapshotter.resources | object | `{"limits":{"memory":"100Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
 
 ### Other Values
