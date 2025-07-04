@@ -1,6 +1,6 @@
 # ionoscloud-blockstorage-csi-driver
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.1](https://img.shields.io/badge/AppVersion-v1.9.0--rc.1-informational?style=flat-square)
+![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.2](https://img.shields.io/badge/AppVersion-v1.9.0--rc.2-informational?style=flat-square)
 
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
 
