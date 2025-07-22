@@ -87,10 +87,10 @@ spec:
               mountPath: /etc
         - name: node-driver-registrar
           securityContext:
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
             capabilities:
               drop: ["ALL"]
-            privileged: false
+            privileged: true
             readOnlyRootFilesystem: true
           image: "{{ include "image.registry" . }}{{ .Values.registrar.image.repository }}:{{ .Values.registrar.image.tag }}"
           imagePullPolicy: IfNotPresent
