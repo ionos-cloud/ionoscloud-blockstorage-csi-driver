@@ -35,19 +35,19 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       priorityClassName: system-node-critical
-      {{- if and .Values.init .Values.init.selinux .Values.init.selinux.enabled }}
+      {{- if .Values.init.selinux.enabled }}
       initContainers:
         - name: set-selinux-context
           image: "{{ .Values.init.selinux.image.repository }}:{{ .Values.init.selinux.image.tag }}"
           command:
             - sh
             - -c
-            - chcon -Rt container_file_t /var/lib/csi
+            - chcon -Rt container_file_t /csi
           securityContext:
             privileged: true
           volumeMounts:
             - name: socket-dir
-              mountPath: /var/lib/csi
+              mountPath: /csi
       {{- end }}
       containers:
         - name: driver
