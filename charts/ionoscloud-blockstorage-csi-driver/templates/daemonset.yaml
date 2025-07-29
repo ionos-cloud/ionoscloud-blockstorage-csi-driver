@@ -35,6 +35,20 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       priorityClassName: system-node-critical
+      {{- if and .Values.init .Values.init.selinux .Values.init.selinux.enabled }}
+      initContainers:
+        - name: set-selinux-context
+          image: "{{ .Values.init.selinux.image.repository }}:{{ .Values.init.selinux.image.tag }}"
+          command:
+            - sh
+            - -c
+            - chcon -Rt container_file_t /var/lib/csi
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi
+      {{- end }}
       containers:
         - name: driver
           securityContext:
@@ -87,10 +101,8 @@ spec:
               mountPath: /etc
         - name: node-driver-registrar
           securityContext:
-            allowPrivilegeEscalation: true
             capabilities:
               drop: ["ALL"]
-            privileged: true
             readOnlyRootFilesystem: true
           image: "{{ include "image.registry" . }}{{ .Values.registrar.image.repository }}:{{ .Values.registrar.image.tag }}"
           imagePullPolicy: IfNotPresent

@@ -1,7 +1,5 @@
 # ionoscloud-blockstorage-csi-driver
 
-![image-version] ![chart-version]
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/container-storage-interface/spec/master/logo.png" width="200">
   <img src="./docs/assets/images/LOGO_IONOS_Blue_RGB.png" width="200">
@@ -41,6 +39,3 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 [4]: https://kubernetes.io/docs/concepts/storage/storage-classes/#the-storageclass-resource
 [5]: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims
 [6]: https://kubernetes.io/docs/concepts/storage/volume-snapshots
-
-[image-version]: <https://ghcr-badge.egpl.dev/ionos-cloud/ionoscloud-blockstorage-csi-driver/latest_tag?label=app version>
-[chart-version]: <https://ghcr-badge.egpl.dev/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver/latest_tag?label=chart version>
