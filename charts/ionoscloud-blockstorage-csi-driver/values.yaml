@@ -324,7 +324,6 @@ init:
     image:
       # -- Image repository used for the SELinux context fix.
       # Must contain the `chcon` utility.
-      # Recommended: `registry.access.redhat.com/ubi8/ubi-minimal`
       # @section -- SELinux
       repository: registry.access.redhat.com/ubi8/ubi-minimal
 
