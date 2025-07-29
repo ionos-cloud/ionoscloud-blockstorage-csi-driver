@@ -319,7 +319,7 @@ init:
     # This initContainer applies the correct SELinux label (`container_file_t`)
     # to the CSI socket directory to ensure compatibility with RHEL CoreOS.
     # @section -- SELinux
-    enabled: true
+    enabled: false
 
     image:
       # -- Image repository used for the SELinux context fix.
