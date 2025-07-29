@@ -329,6 +329,5 @@ init:
       repository: registry.access.redhat.com/ubi8/ubi-minimal
 
       # -- Image tag to use for the SELinux context fix.
-      # Consider pinning to a specific UBI version for reproducibility.
       # @section -- SELinux
       tag: latest
