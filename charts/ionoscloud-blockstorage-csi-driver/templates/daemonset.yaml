@@ -35,7 +35,7 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       priorityClassName: system-node-critical
-      {{- if .Values.init.selinux.enabled }}
+      {{- if and .Values.init .Values.init.selinux .Values.init.selinux.enabled }}
       initContainers:
         - name: set-selinux-context
           image: "{{ .Values.init.selinux.image.repository }}:{{ .Values.init.selinux.image.tag }}"
