@@ -138,6 +138,7 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | init.selinux.enabled | bool | `false` | Enable the SELinux context fix initContainer. This initContainer applies the correct SELinux label (`container_file_t`) to the CSI socket directory to ensure compatibility with RHEL CoreOS. |
 | init.selinux.image.repository | string | `"registry.access.redhat.com/ubi8/ubi-minimal"` | Image repository used for the SELinux context fix. Must contain the `chcon` utility. |
 | init.selinux.image.tag | string | `"latest"` | Image tag to use for the SELinux context fix. |
+| init.selinux.resources.requests | object | `{"cpu":"10m","memory":"16Mi"}` | Resource requests and limits for the SELinux context initContainer. Setting these helps Kubernetes schedule the pod and prevent resource overcommitment. |
 
 ### Monitoring
 
@@ -206,6 +207,10 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | className | string | `"ionos-cloud"` | Name of VolumeSnapshotClass. Also used as prefix for StorageClasses. |
 | clusterName | string | `"k8s"` | Name used to identify managed storage resources. |
 | driverName | string | `"cloud.ionos.com"` | Name of the driver in the storage class. |
+| init.selinux.resources.limits.cpu | string | `"50m"` | CPU limit for the SELinux context initContainer. |
+| init.selinux.resources.limits.memory | string | `"64Mi"` | Memory limit for the SELinux context initContainer. |
+| init.selinux.resources.requests.cpu | string | `"10m"` | CPU request for the SELinux context initContainer. |
+| init.selinux.resources.requests.memory | string | `"16Mi"` | Memory request for the SELinux context initContainer. |
 | nameOverride | string | `""` | Specify a custom name override. This only influences Kubernetes resource names, not properties. |
 | registry | string | Omit if empty | Specify a custom registry name that will be used as prefix for all images. Useful when pulling images from a registry mirror. |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |

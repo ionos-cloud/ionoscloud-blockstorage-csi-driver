@@ -48,6 +48,8 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /csi
+          resources:
+            {{- toYaml .Values.init.selinux.resources | nindent 12 }}
       {{- end }}
       containers:
         - name: driver

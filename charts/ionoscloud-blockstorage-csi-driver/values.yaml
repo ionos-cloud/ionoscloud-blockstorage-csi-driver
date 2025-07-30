@@ -330,3 +330,18 @@ init:
       # -- Image tag to use for the SELinux context fix.
       # @section -- SELinux
       tag: latest
+
+    resources:
+      # -- Resource requests and limits for the SELinux context initContainer.
+      # Setting these helps Kubernetes schedule the pod and prevent resource overcommitment.
+      # @section -- SELinux
+      requests:
+        # -- CPU request for the SELinux context initContainer.
+        cpu: 10m
+        # -- Memory request for the SELinux context initContainer.
+        memory: 16Mi
+      limits:
+        # -- CPU limit for the SELinux context initContainer.
+        cpu: 50m
+        # -- Memory limit for the SELinux context initContainer.
+        memory: 64Mi
