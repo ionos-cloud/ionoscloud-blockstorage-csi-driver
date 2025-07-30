@@ -135,9 +135,9 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| init.selinux.enabled | bool | `true` | Enable the SELinux context fix initContainer. This initContainer applies the correct SELinux label (`container_file_t`) to the CSI socket directory to ensure compatibility with RHEL CoreOS. |
-| init.selinux.image.repository | string | `"registry.access.redhat.com/ubi8/ubi-minimal"` | Image repository used for the SELinux context fix. Must contain the `chcon` utility. Recommended: `registry.access.redhat.com/ubi8/ubi-minimal` |
-| init.selinux.image.tag | string | `"latest"` | Image tag to use for the SELinux context fix. Consider pinning to a specific UBI version for reproducibility. |
+| init.selinux.enabled | bool | `false` | Enable the SELinux context fix initContainer. This initContainer applies the correct SELinux label (`container_file_t`) to the CSI socket directory to ensure compatibility with RHEL CoreOS. |
+| init.selinux.image.repository | string | `"registry.access.redhat.com/ubi8/ubi-minimal"` | Image repository used for the SELinux context fix. Must contain the `chcon` utility. |
+| init.selinux.image.tag | string | `"latest"` | Image tag to use for the SELinux context fix. |
 
 ### Monitoring
 
