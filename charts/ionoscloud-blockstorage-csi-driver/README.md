@@ -1,6 +1,6 @@
 # ionoscloud-blockstorage-csi-driver
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.1](https://img.shields.io/badge/AppVersion-v1.9.0--rc.1-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.9.0-rc.2](https://img.shields.io/badge/AppVersion-v1.9.0--rc.2-informational?style=flat-square)
 
 **Homepage:** <https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver>
 
@@ -130,6 +130,16 @@ helm show crds ./charts/ionoscloud-blockstorage-csi-driver | kubectl apply -f -
 | driver.node.image.repository | string | `"ghcr.io/ionos-cloud/ionoscloud-blockstorage-csi-driver"` | Image repository |
 | driver.node.image.tag | string | Defaults to appVersion | Image tag |
 | driver.node.resources | object | `{"limits":{"memory":"50Mi"},"requests":{"cpu":"10m","memory":"25Mi"}}` | Resource requests and limits |
+
+### SELinux
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| init.selinux.enabled | bool | `false` | Enable the SELinux context fix initContainer. This initContainer applies the correct SELinux label (`container_file_t`) to the CSI socket directory to ensure compatibility with RHEL CoreOS. |
+| init.selinux.image.repository | string | `"registry.access.redhat.com/ubi8/ubi-minimal"` | Image repository used for the SELinux context fix. Must contain the `chcon` utility. |
+| init.selinux.image.tag | string | `"latest"` | Image tag to use for the SELinux context fix. |
+| init.selinux.resources.limits | object | `{"cpu":"50m","memory":"64Mi"}` | CPU and memory limits for the SELinux context initContainer. |
+| init.selinux.resources.requests | object | `{"cpu":"10m","memory":"16Mi"}` | CPU and memory requests for the SELinux context initContainer. |
 
 ### Monitoring
 
