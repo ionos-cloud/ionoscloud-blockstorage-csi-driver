@@ -7,7 +7,7 @@ keywords:
   - csi
   - ionos-cloud
 version: 0.5.0
-appVersion: "v1.9.0-rc.2"
+appVersion: "v1.9.0"
 kubeVersion: ">=1.25.0-0"
 home: https://github.com/ionos-cloud/ionoscloud-blockstorage-csi-driver
 sources:
@@ -15,5 +15,7 @@ sources:
 maintainers:
   - name: gfariasalves-ionos
     url: https://github.com/gfariasalves-ionos
+  - name: jonas27
+    url: https://github.com/jonas27
   - name: jriedel-ionos
     url: https://github.com/jriedel-ionos
