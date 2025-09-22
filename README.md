@@ -15,7 +15,7 @@ Only these images should be used together with the helm chart.
 
 ## Features
 
-* **Static Provisioning**: Associate an externally-created volume with a [Persistent Volume][2] (PV) for consumption
+* **Static Provisioning&ast;**: Associate an externally-created volume with a [Persistent Volume][2] (PV) for consumption
   within Kubernetes.
 * **Dynamic Provisioning**: Automatically create volumes and associated [Persistent Volumes][2] from
   [PersistentVolumeClaims][3] (PVC). Parameters can be passed in via a [StorageClass][4] for fine-grained control over
@@ -39,3 +39,5 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 [4]: https://kubernetes.io/docs/concepts/storage/storage-classes/#the-storageclass-resource
 [5]: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims
 [6]: https://kubernetes.io/docs/concepts/storage/volume-snapshots
+
+**&ast;**Externally created volumes [must have the Disc Serial Exposure flag enabled](https://api.ionos.com/docs/cloud/v6/#tag/Volumes/operation/datacentersVolumesPatch), otherwise the driver won't be able to identify them during the mounting process.
