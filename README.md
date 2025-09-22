@@ -40,4 +40,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 [5]: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims
 [6]: https://kubernetes.io/docs/concepts/storage/volume-snapshots
 
-**&ast;**: Externally created volumes [must have the Disc Serial Exposure flag enabled](https://api.ionos.com/docs/cloud/v6/#tag/Volumes/operation/datacentersVolumesPatch), otherwise the driver won't be able to identify them during the mounting process.
+**&ast;**Externally created volumes [must have the Disc Serial Exposure flag enabled](https://api.ionos.com/docs/cloud/v6/#tag/Volumes/operation/datacentersVolumesPatch), otherwise the driver won't be able to identify them during the mounting process.
