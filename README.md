@@ -1,5 +1,7 @@
 # ionoscloud-blockstorage-csi-driver
 
+![image-version] ![chart-version]
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/container-storage-interface/spec/master/logo.png" width="200">
   <img src="./docs/assets/images/LOGO_IONOS_Blue_RGB.png" width="200">
@@ -41,3 +43,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 [6]: https://kubernetes.io/docs/concepts/storage/volume-snapshots
 
 **&ast;**Externally created volumes [must have the Disc Serial Exposure flag enabled](https://api.ionos.com/docs/cloud/v6/#tag/Volumes/operation/datacentersVolumesPatch), otherwise the driver won't be able to identify them during the mounting process.
+
+[image-version]: <https://ghcr-badge.egpl.dev/ionos-cloud/ionoscloud-blockstorage-csi-driver/latest_tag?label=app version>
+[chart-version]: <https://ghcr-badge.egpl.dev/ionos-cloud/helm-charts/ionoscloud-blockstorage-csi-driver/latest_tag?label=chart version>
