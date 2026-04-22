@@ -76,7 +76,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: token
-                  name: {{ .Values.tokenSecretName }}
+                  name: {{ .Values.tokenSecretName | required "tokenSecretName is required" }}
             {{- range $key, $value := .Values.driver.node.extraEnv }}
             - name: {{ $key }}
               value: "{{ $value }}"
@@ -111,11 +111,11 @@ spec:
           args:
             - --csi-address=/csi/csi.sock
             - --kubelet-registration-path=/var/lib/csi/{{ .Chart.Name }}/csi.sock
-            {{- include "csi-driver.extraArgs" .Values.registar | indent 12 }}
+            {{- include "csi-driver.extraArgs" .Values.registrar | indent 12 }}
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/sh", "-c", "rm -f /var/lib/csi/csi-driver/csi.sock"]
+                command: ["/bin/sh", "-c", "rm -f /csi/csi.sock"]
           env:
             - name: KUBE_NODE_NAME
               valueFrom:
