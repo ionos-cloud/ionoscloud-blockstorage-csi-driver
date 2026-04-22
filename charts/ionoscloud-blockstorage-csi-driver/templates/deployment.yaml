@@ -64,7 +64,7 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /csi
-            - name: override-autmount
+            - name: override-automount
               mountPath: /var/run/secrets/kubernetes.io/serviceaccount
           {{- with .Values.driver.controller.volumeMounts }}
             {{- toYaml . | nindent 12 }}
@@ -167,11 +167,8 @@ spec:
       volumes:
         - name: socket-dir
           emptyDir: {}
-        - name: override-autmount
+        - name: override-automount
           emptyDir: {}
-        - name: auth-token
-          secret:
-            secretName: {{ .Values.tokenSecretName | required "tokenSecretName is required" }}
       {{- with .Values.deployment.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
