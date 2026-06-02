@@ -29,6 +29,38 @@ The file must contain the datacenter ID of the VM in the following format:
 {"datacenter-id": "<DATACENTER_ID>"}
 ```
 
+### Node image requirements
+
+The nodes in your cluster must be provisioned from an image with the following flags enabled.  
+Without them, every volume attach or detach operation triggers a full VM stop–update–start cycle, causing the node to reboot unexpectedly and disrupting workloads running on it.
+
+#### Virtio hotplug
+
+Allows volumes to be attached and detached without a reboot:
+
+```sh
+ionosctl compute image update --image-id <YOUR_NODE_IMAGE_ID>\
+ --disc-virtio-hot-plug=true \
+ --disc-virtio-hot-unplug=true \
+ --disc-scsi-hot-plug=true \
+ --disc-scsi-hot-unplug=true
+```
+#### Disc serial exposure
+
+Required for the driver to identify volumes during mounting (cannot be set via `ionosctl`):
+
+```sh
+curl -X PATCH https://api.ionos.com/cloudapi/v6/images/ <YOUR_NODE_IMAGE_ID>\
+ -H "Authorization: Bearer " \
+ -H "Content-Type: application/json" \
+ -d '{"exposeSerial": true}'
+```
+
+> [!IMPORTANT]
+> These flags are stamped onto volumes at creation time and are not back-propagated to existing volumes.
+> If you update the image flags on an already-used image, you must reprovision your nodes (drain, delete, and re-create) for the change to take effect.
+> Restarting existing nodes is not sufficient.
+
 ## Installation
 
 Provide the secret name during installation:
